@@ -1,11 +1,15 @@
 # CPU & RAM Monitoring
+import logging
 import psutil
 import time
-import sys
 
 max_allowed_overload = 10  # in percent
 time_between_emails = 300  # in seconds
+max_allowed_anomalies = 5  # in number of anomalies
 
+logging.basicConfig(filename='monitoring.log', filemode='w', format='%(levelname)s - %(asctime)s - %(message)s')
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 
 def cpu_usage():
     return psutil.cpu_percent(interval=5)
@@ -24,8 +28,6 @@ def get_normal_usage():
         cpu += cpu_usage()
         ram += ram_usage()
         i += 1
-        sys.stderr.write('\rProgress : %.2f %%' % (i * 100 / 12))
-        sys.stderr.flush()
 
     return cpu / 12, ram / 12
 
@@ -39,13 +41,14 @@ def get_anomalies(cpu, ram):
 
 
 def send_email(cpu, ram):
-    email = "TODO send email"
+    logger.info("Sending email...")
 
-print("Trying to get normal usage... (1 minute)")
+
+logger.info("Trying to get normal usage... (1 minute)")
 normal_cpu, normal_ram = get_normal_usage()
 
-print("\n\nNormal CPU Usage: %.2f %%" % normal_cpu)
-print("Normal RAM Usage: %.2f %%\n" % normal_ram)
+logger.info("Normal CPU Usage: %.2f %%" % normal_cpu)
+logger.info("Normal RAM Usage: %.2f %%" % normal_ram)
 
 anomalies = 0
 email_sent_cooldown = 0
@@ -54,20 +57,21 @@ while True:
     current_cpu, current_ram = get_current_usage()
     cpu_anomaly, ram_anomaly = get_anomalies(current_cpu, current_ram)
 
-    # print current usage of each, with "(Too high!)" if anomaly
-    print("\nCurrent CPU Usage: %.2f %%" % current_cpu, "(Too high!)" if cpu_anomaly else "")
-    print("Current RAM Usage: %.2f %%" % current_ram, "(Too high!)" if ram_anomaly else "")
+    # print current usage of cpu, with "(Too high!)" if anomaly. logging.warning if anomaly, logging.info else
+    logger.warning("Current CPU Usage: %.2f %% (Too High!)" % current_cpu) if cpu_anomaly else logger.info(
+        "Current CPU Usage: %.2f %%" % current_cpu)
+    logger.warning("Current RAM Usage: %.2f %% (Too High!)" % current_ram) if ram_anomaly else logger.info(
+        "Current RAM Usage: %.2f %%" % current_ram)
 
     anomalies = anomalies + 1 if cpu_anomaly or ram_anomaly else 0
 
     # if anomalies > 5 and last email was sent more than 5 minutes ago, send email
-    if anomalies > 5:
+    if anomalies > max_allowed_anomalies:
         if time.time() - email_sent_cooldown > time_between_emails:
-            sys.stderr.write("\nToo many anomalies! Sending email...\n")
+            logger.error("Too many anomalies! Sending email...")
             send_email(current_cpu, current_ram)
-            sys.stderr.write("Email sent!\n")
+            logger.info("Email sent!")
             anomalies = 0
             email_sent_cooldown = time.time()
         else:
-            sys.stderr.write(
-                "\nToo many anomalies! Email already sent less than %d ago...\n" % (time_between_emails // 60))
+            logger.error("Too many anomalies! Email already sent less than %d ago..." % (time_between_emails // 60))
