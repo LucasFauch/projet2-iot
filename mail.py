@@ -14,7 +14,22 @@ email_to = "ekiam333@gmail.com"
 pswd = "qecmbyexhgjvtxoc"
 
 msg = EmailMessage()
-msg.set_content('This is my message')
+
+body = "Alerte détection anormale de l'utilisation de votre CPU sur votre object connecté."
+end_mail = "Envoyé depuis {}".format(email_from)
+
+print(body)
+
+msg.set_content(body)
+
+msg.add_alternative("""<!DOCTYPE html>
+<html>
+    <body>
+        <h2>{}</h2>
+        <p>{}</p> 
+    </body>
+</html>
+""".format(body, end_mail), subtype='html')
 
 msg['Subject'] = 'Subject TEST'
 msg['From'] = email_from
