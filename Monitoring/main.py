@@ -7,9 +7,11 @@ max_allowed_overload = 10  # in percent
 time_between_emails = 300  # in seconds
 max_allowed_anomalies = 5  # in number of anomalies
 
-logging.basicConfig(filename='monitoring.log', filemode='w', format='%(levelname)s - %(asctime)s - %(message)s')
+logging_name = "monitoring_" + time.strftime("%Y-%m-%d_%H-%M-%S") + ".log"
+logging.basicConfig(filename=logging_name, filemode='w', format='%(levelname)s - %(asctime)s - %(message)s')
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
+
 
 def cpu_usage():
     return psutil.cpu_percent(interval=5)
@@ -74,4 +76,5 @@ while True:
             anomalies = 0
             email_sent_cooldown = time.time()
         else:
-            logger.error("Too many anomalies! Email already sent less than %d ago..." % (time_between_emails // 60))
+            logger.error(
+                "Too many anomalies! Email already sent less than %d minutes ago..." % (time_between_emails // 60))
