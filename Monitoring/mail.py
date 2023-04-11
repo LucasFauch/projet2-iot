@@ -117,12 +117,13 @@ class Mail:
         finally:
             server.quit()
 
+'''
 mail = Mail(587, "smtp.gmail.com")
 mail.setEmailFrom("projet2bisiotuqac@gmail.com")
 mail.setEmailTo("projet2bisiotuqac@gmail.com")
 mail.setPassword("dutcscqvxcrqzaub")
 mail.generateMail()
-mail.sendMail()
+mail.sendMail()'''
 
 '''
 # Mise en place smtp_port et smtp_server
