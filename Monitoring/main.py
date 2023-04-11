@@ -48,7 +48,7 @@ def send_email(cpu, ram):
     mail.setEmailFrom("projet2bisiotuqac@gmail.com")
     mail.setEmailTo("projet2bisiotuqac@gmail.com")
     mail.setPassword("dutcscqvxcrqzaub")
-    mail.generateMail()
+    mail.generateMail(cpu, ram)
     mail.sendMail()
     #logger.info("Sending email...")
 

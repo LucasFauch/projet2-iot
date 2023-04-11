@@ -89,7 +89,7 @@ class Mail:
                 <ul>
                     <li>Nom de l'objet : Objet connecté 123</li>
                     <li>Date et heure de l'anomalie : {date} à {heureActuelle}</li>
-                    <li>Description de l'anomalie : Utilisation du CPU à {cpu}%, et de la RAM {ram}%</li>
+                    <li>Description de l'anomalie : Utilisation du CPU à {cpu}%, et de la RAM à {ram}%</li>
                 </ul>
                 <p>Pour résoudre ce problème, veuillez contacter notre service client en cliquant sur le bouton ci-dessous :</p>
                 <p><a href="https://exemple.com/service-client" class="button">Contacter le service client</a></p>
