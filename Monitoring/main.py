@@ -77,7 +77,7 @@ while True:
     if anomalies > max_allowed_anomalies:
         if time.time() - email_sent_cooldown > time_between_emails:
             logger.error("Too many anomalies! Sending email...")
-            send_email(current_cpu, current_ram)
+            send_email(logger, current_cpu, current_ram)
             logger.info("Email sent!")
             anomalies = 0
             email_sent_cooldown = time.time()
