@@ -114,7 +114,7 @@ class Mail:
     def sendMail(self, logger):
         # Préparation pour l'envoi du mail
         simple_email_context = ssl.create_default_context()
-        logger.info(self.smtp_server, self.smtp_port)
+        #logger.info(self.smtp_server, self.smtp_port)
 
         try:
             logger.info("Connexion au serveur...")
