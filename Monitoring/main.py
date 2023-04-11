@@ -2,6 +2,7 @@
 import logging
 import psutil
 import time
+import mail as mailUtility
 
 max_allowed_overload = 10  # in percent
 time_between_emails = 300  # in seconds
@@ -43,8 +44,13 @@ def get_anomalies(cpu, ram):
 
 
 def send_email(cpu, ram):
-    logger.info("Sending email...")
-
+    mail = mailUtility.Mail(587, "smtp.gmail.com")
+    mail.setEmailFrom("projet2bisiotuqac@gmail.com")
+    mail.setEmailTo("projet2bisiotuqac@gmail.com")
+    mail.setPassword("dutcscqvxcrqzaub")
+    mail.generateMail()
+    mail.sendMail()
+    #logger.info("Sending email...")
 
 logger.info("Trying to get normal usage... (1 minute)")
 normal_cpu, normal_ram = get_normal_usage()
