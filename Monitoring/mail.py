@@ -2,7 +2,7 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 import datetime
-import os
+import platform
 
 class Mail:
     def __init__(self, smtp_port, smtp_server ):
@@ -40,10 +40,9 @@ class Mail:
         date = date.strftime("%d-%m-%Y")
 
         try:
-            objectName = os.uname()[1]
+            objectName = platform.node()
         
         except Exception as e:
-            print("Ne fonctionne pas sous Windows")
             objectName = "DefaultName"
 
         self.msg.set_content(body)
