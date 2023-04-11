@@ -29,7 +29,7 @@ class Mail:
         self.msg['To'] = self.email_to
     
         body = "Alerte détection anormale de l'utilisation de votre CPU sur votre object connecté."
-        end_mail = "Envoyé depuis {}".format(self.email_from)
+        end_mail = f"Envoyé depuis {self.email_from}"
         self.msg.set_content(body)
         html = f"""
         <!DOCTYPE html>
@@ -94,8 +94,7 @@ class Mail:
         """
         
         self.msg.add_alternative(html, subtype='html')
-        
-    
+            
     def sendMail(self):
         # Préparation pour l'envoi du mail
         simple_email_context = ssl.create_default_context()
