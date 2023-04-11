@@ -1,6 +1,7 @@
 import smtplib
 import ssl
 from email.message import EmailMessage
+import datetime
 
 class Mail:
     def __init__(self, smtp_port, smtp_server ):
@@ -24,12 +25,19 @@ class Mail:
     def setSubjectForMail(self, subject):
         self.msg['Subject'] = subject
 
-    def generateMail(self):
+    def generateMail(self, cpu, ram):
         self.msg['From'] = self.email_from
         self.msg['To'] = self.email_to
     
         body = "Alerte détection anormale de l'utilisation de votre CPU sur votre object connecté."
         end_mail = f"Envoyé depuis {self.email_from}"
+
+        heureActuelle = datetime.datetime.now()
+        heureActuelle = heureActuelle.strftime("%H:%M:%S")
+
+        date = datetime.datetime.now()
+        date = date.strftime("%d-%m-%Y")
+
         self.msg.set_content(body)
         html = f"""
         <!DOCTYPE html>
@@ -80,8 +88,8 @@ class Mail:
                 <p>Nous avons détecté une anomalie sur votre objet connecté. Veuillez vérifier les informations suivantes :</p>
                 <ul>
                     <li>Nom de l'objet : Objet connecté 123</li>
-                    <li>Date et heure de l'anomalie : 11 avril 2023 à 10h30</li>
-                    <li>Description de l'anomalie : Problème de connexion au réseau</li>
+                    <li>Date et heure de l'anomalie : {date} à {heureActuelle}</li>
+                    <li>Description de l'anomalie : Utilisation du CPU à {cpu}%, et de la RAM {ram}%</li>
                 </ul>
                 <p>Pour résoudre ce problème, veuillez contacter notre service client en cliquant sur le bouton ci-dessous :</p>
                 <p><a href="https://exemple.com/service-client" class="button">Contacter le service client</a></p>
@@ -117,12 +125,11 @@ class Mail:
         finally:
             server.quit()
 
-'''
-mail = Mail(587, "smtp.gmail.com")
+'''mail = Mail(587, "smtp.gmail.com")
 mail.setEmailFrom("projet2bisiotuqac@gmail.com")
 mail.setEmailTo("projet2bisiotuqac@gmail.com")
 mail.setPassword("dutcscqvxcrqzaub")
-mail.generateMail()
+mail.generateMail(50, 30)
 mail.sendMail()'''
 
 '''
