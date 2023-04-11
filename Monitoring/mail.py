@@ -27,7 +27,7 @@ class Mail:
     def setSubjectForMail(self, subject):
         self.msg['Subject'] = subject
 
-    def generateMail(self, cpu, ram):
+    def generateMail(self, cpu, ram, normalCpu, normalRam):
         self.msg['From'] = self.email_from
         self.msg['To'] = self.email_to
     
@@ -97,7 +97,7 @@ class Mail:
                 <ul>
                     <li>Nom de l'objet : {objectName}</li>
                     <li>Date et heure de l'anomalie : {date} à {heureActuelle}</li>
-                    <li>Description de l'anomalie : Utilisation du CPU à {cpu}%, et de la RAM à {ram}%</li>
+                    <li>Description de l'anomalie : Utilisation du CPU à {cpu}% au lieu de {normalCpu}%, et de la RAM à {ram}% au lieu de {normalRam}%</li>
                 </ul>
                 <p>Pour résoudre ce problème, veuillez contacter notre service client en cliquant sur le bouton ci-dessous :</p>
                 <p><a href="http://fehmijaafar.net/wiki-iot/index.php?title=Main_Page" class="button">Contacter le service client</a></p>
