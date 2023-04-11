@@ -43,13 +43,13 @@ def get_anomalies(cpu, ram):
     return cpu > normal_cpu + max_allowed_overload, ram > normal_ram + max_allowed_overload
 
 
-def send_email(cpu, ram):
+def send_email(logger, cpu, ram):
     mail = mailUtility.Mail(587, "smtp.gmail.com")
     mail.setEmailFrom("projet2bisiotuqac@gmail.com")
     mail.setEmailTo("projet2bisiotuqac@gmail.com")
     mail.setPassword("dutcscqvxcrqzaub")
     mail.generateMail(cpu, ram)
-    mail.sendMail()
+    mail.sendMail(logger)
     #logger.info("Sending email...")
 
 logger.info("Trying to get normal usage... (1 minute)")

@@ -3,6 +3,7 @@ import ssl
 from email.message import EmailMessage
 import datetime
 import platform
+import logging
 
 class Mail:
     def __init__(self, smtp_port, smtp_server ):
@@ -110,23 +111,23 @@ class Mail:
         
         self.msg.add_alternative(html, subtype='html')
             
-    def sendMail(self):
+    def sendMail(self, logger):
         # Préparation pour l'envoi du mail
         simple_email_context = ssl.create_default_context()
-        print(self.smtp_server, self.smtp_port)
+        logger.info(self.smtp_server, self.smtp_port)
 
         try:
-            print("Connexion au serveur...")
+            logger.info("Connexion au serveur...")
             server = smtplib.SMTP(self.smtp_server, self.smtp_port)
             server.starttls(context=simple_email_context)
             server.login(self.email_from, self.password)
-            print("Connexion au serveur établie")
+            logger.info("Connexion au serveur établie")
             #server.sendmail(email_from, email_to, message)
             server.send_message(self.msg)
-            print(f"Mail envoyé avec succès à {self.email_to}")
+            logger.info(f"Mail envoyé avec succès à {self.email_to}")
 
         except Exception as e:
-            print(e)
+            logger.error(e)
 
         # Fermeture du port
         finally:
