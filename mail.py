@@ -10,6 +10,7 @@ class Mail:
         self.email_to = ""
         self.password = ""
         self.msg = EmailMessage()
+        self.msg['Subject'] = 'Anomalie détectée sur votre object connecté'
 
     def setEmailFrom(self, email_from):
         self.email_from = email_from
@@ -20,24 +21,80 @@ class Mail:
     def setPassword(self, password):
         self.password = password
 
+    def setSubjectForMail(self, subject):
+        self.msg['Subject'] = subject
+
     def generateMail(self):
-        # Création du mail et des détails nécessaires
+        self.msg['From'] = self.email_from
+        self.msg['To'] = self.email_to
+    
         body = "Alerte détection anormale de l'utilisation de votre CPU sur votre object connecté."
         end_mail = "Envoyé depuis {}".format(self.email_from)
         self.msg.set_content(body)
-
-        self.msg.add_alternative("""<!DOCTYPE html>
+        html = f"""
+        <!DOCTYPE html>
         <html>
-            <body>
-                <h2>{}</h2>
-                <p>{}</p> 
-            </body>
+        <head>
+            <title>Anomalie sur votre objet connecté</title>
+            <style type="text/css">
+                body {{
+                    background-color: #f4f4f4;
+                    font-family: Arial, sans-serif;
+                    color: #333333;
+                    margin: 0;
+                    padding: 0;
+                }}
+                .container {{
+                    max-width: 600px;
+                    margin: auto;
+                    padding: 20px;
+                    background-color: #ffffff;
+                    border-radius: 5px;
+                    box-shadow: 0px 0px 10px #cccccc;
+                }}
+                h1 {{
+                    font-size: 24px;
+                    color: #333333;
+                    margin: 0 0 10px 0;
+                }}
+                p {{
+                    font-size: 16px;
+                    line-height: 1.5;
+                    margin: 0 0 20px 0;
+                }}
+                .button {{
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background-color: #007bff;
+                    color: #ffffff;
+                    font-size: 16px;
+                    text-decoration: none;
+                    border-radius: 5px;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Anomalie détectée sur votre objet connecté</h1>
+                <p>Bonjour,</p>
+                <p>Nous avons détecté une anomalie sur votre objet connecté. Veuillez vérifier les informations suivantes :</p>
+                <ul>
+                    <li>Nom de l'objet : Objet connecté 123</li>
+                    <li>Date et heure de l'anomalie : 11 avril 2023 à 10h30</li>
+                    <li>Description de l'anomalie : Problème de connexion au réseau</li>
+                </ul>
+                <p>Pour résoudre ce problème, veuillez contacter notre service client en cliquant sur le bouton ci-dessous :</p>
+                <p><a href="https://exemple.com/service-client" class="button">Contacter le service client</a></p>
+                <p>Merci,</p>
+                <p>L'équipe de support de l'objet connecté</p>
+                <p>{end_mail}</p>
+            </div>
+        </body>
         </html>
-        """.format(body, end_mail), subtype='html')
-
-        self.msg['Subject'] = 'Subject TEST'
-        self.msg['From'] = self.email_from
-        self.msg['To'] = self.email_to
+        """
+        
+        self.msg.add_alternative(html, subtype='html')
+        
     
     def sendMail(self):
         # Préparation pour l'envoi du mail
