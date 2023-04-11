@@ -23,17 +23,17 @@ class Mail:
     def generateMail(self):
         # Création du mail et des détails nécessaires
         body = "Alerte détection anormale de l'utilisation de votre CPU sur votre object connecté."
-        end_mail = "Envoyé depuis {}".format(self.email_from)
+        end_mail = f"Envoyé depuis {self.email_from}"
         self.msg.set_content(body)
 
-        self.msg.add_alternative("""<!DOCTYPE html>
+        self.msg.add_alternative(f"""<!DOCTYPE html>
         <html>
             <body>
-                <h2>{}</h2>
-                <p>{}</p> 
+                <h2>{body}</h2>
+                <p>{end_mail}</p> 
             </body>
         </html>
-        """.format(body, end_mail), subtype='html')
+        """, subtype='html')
 
         self.msg['Subject'] = 'Subject TEST'
         self.msg['From'] = self.email_from
