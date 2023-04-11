@@ -2,6 +2,7 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 import datetime
+import os
 
 class Mail:
     def __init__(self, smtp_port, smtp_server ):
@@ -37,6 +38,13 @@ class Mail:
 
         date = datetime.datetime.now()
         date = date.strftime("%d-%m-%Y")
+
+        try:
+            objectName = os.uname()[1]
+        
+        except Exception as e:
+            print("Ne fonctionne pas sous Windows")
+            objectName = "DefaultName"
 
         self.msg.set_content(body)
         html = f"""
@@ -87,7 +95,7 @@ class Mail:
                 <p>Bonjour,</p>
                 <p>Nous avons détecté une anomalie sur votre objet connecté. Veuillez vérifier les informations suivantes :</p>
                 <ul>
-                    <li>Nom de l'objet : Objet connecté 123</li>
+                    <li>Nom de l'objet : {objectName}</li>
                     <li>Date et heure de l'anomalie : {date} à {heureActuelle}</li>
                     <li>Description de l'anomalie : Utilisation du CPU à {cpu}%, et de la RAM à {ram}%</li>
                 </ul>
@@ -125,12 +133,12 @@ class Mail:
         finally:
             server.quit()
 
-'''mail = Mail(587, "smtp.gmail.com")
+mail = Mail(587, "smtp.gmail.com")
 mail.setEmailFrom("projet2bisiotuqac@gmail.com")
 mail.setEmailTo("projet2bisiotuqac@gmail.com")
 mail.setPassword("dutcscqvxcrqzaub")
 mail.generateMail(50, 30)
-mail.sendMail()'''
+mail.sendMail()
 
 '''
 # Mise en place smtp_port et smtp_server
