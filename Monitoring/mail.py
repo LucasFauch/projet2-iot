@@ -81,7 +81,7 @@ class Mail:
                 .button {{
                     display: inline-block;
                     padding: 10px 20px;
-                    background-color: #007bff;
+                    background-color: #00bbff;
                     color: #ffffff;
                     font-size: 16px;
                     text-decoration: none;
@@ -100,7 +100,7 @@ class Mail:
                     <li>Description de l'anomalie : Utilisation du CPU à {cpu}%, et de la RAM à {ram}%</li>
                 </ul>
                 <p>Pour résoudre ce problème, veuillez contacter notre service client en cliquant sur le bouton ci-dessous :</p>
-                <p><a href="https://exemple.com/service-client" class="button">Contacter le service client</a></p>
+                <p><a href="http://fehmijaafar.net/wiki-iot/index.php?title=Main_Page" class="button">Contacter le service client</a></p>
                 <p>Merci,</p>
                 <p>L'équipe de support de l'objet connecté</p>
                 <p>{end_mail}</p>
