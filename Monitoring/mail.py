@@ -40,6 +40,9 @@ class Mail:
         date = datetime.datetime.now()
         date = date.strftime("%d-%m-%Y")
 
+        normalCpu = round(normalCpu, 2)
+        normalRam = round(normalRam, 2)
+
         try:
             objectName = platform.node()
         
@@ -138,7 +141,7 @@ mail = Mail(587, "smtp.gmail.com")
 mail.setEmailFrom("projet2bisiotuqac@gmail.com")
 mail.setEmailTo("projet2bisiotuqac@gmail.com")
 mail.setPassword("dutcscqvxcrqzaub")
-mail.generateMail(50, 30)
+mail.generateMail(50, 30, 25.547782, 74.47823)
 mail.sendMail()'''
 
 '''
