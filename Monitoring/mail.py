@@ -33,7 +33,34 @@ class Mail:
     def setSubjectForMail(self, subject):
         self.msg['Subject'] = subject
 
-    def generateMail(self, cpu, ram, normalCpu, normalRam):
+    def getProcessusSentance(self, processus):
+        return f"{processus[0]} - PID : {processus[1]} avec une utilisation CPU de {processus[2]}% et RAM de {processus[3]}"
+    
+    def getAllProcessusSentance(self, listProcessus):
+        try: 
+            processus1 = listProcessus[0]
+            processus1 = self.getProcessusSentance(processus1)
+        
+        except:
+            processus1 = "None"
+
+        try: 
+            processus2 = listProcessus[1]
+            processus2 = self.getProcessusSentance(processus2)
+        
+        except:
+            processus2 = "None"
+
+        try: 
+            processus3 = listProcessus[2]
+            processus3 = self.getProcessusSentance(processus3)
+        
+        except:
+            processus3 = "None"
+
+        return processus1, processus2, processus3
+    
+    def generateMail(self, cpu, ram, normalCpu, normalRam, listProcessus):
         self.msg['From'] = self.email_from
         self.msg['To'] = self.email_to
     
@@ -56,7 +83,11 @@ class Mail:
             objectName = "DefaultName"
 
         self.msg.set_content(body)
-        
+
+        nbProcessus = len(listProcessus)
+
+        processus1, processus2, processus3 = self.getAllProcessusSentance(listProcessus)
+
         html = f"""
         <!DOCTYPE html>
         <html>
@@ -108,6 +139,12 @@ class Mail:
                     <li>Nom de l'objet : {objectName}</li>
                     <li>Date et heure de l'anomalie : {date} à {heureActuelle}</li>
                     <li>Description de l'anomalie : Utilisation du CPU à {cpu}% au lieu de {normalCpu}% en temps normal, et de la RAM à {ram}% au lieu de {normalRam}% en temps normal</li>
+                </ul>
+                <p> Liste des {nbProcessus} processus ayant une utilisation RAM de plus de 10% : </p>
+                <ul>
+                    <li> {processus1} </li>
+                    <li> {processus2} </li>
+                    <li> {processus3} </li>
                 </ul>
                 <p>Pour résoudre ce problème, veuillez contacter notre service client en cliquant sur le bouton ci-dessous :</p>
                 <p><a href="http://fehmijaafar.net/wiki-iot/index.php?title=Main_Page" class="button">Contacter le service client</a></p>
