@@ -60,7 +60,7 @@ class Mail:
 
         return processus1, processus2, processus3
     
-    def generateMail(self, cpu, ram, normalCpu, normalRam, listProcessus):
+    def generateMail(self, cpu, ram, normalCpu, normalRam, listProcessus=None):
         self.msg['From'] = self.email_from
         self.msg['To'] = self.email_to
     
@@ -89,6 +89,7 @@ class Mail:
             processus1, processus2, processus3 = self.getAllProcessusSentance(listProcessus)
 
         except:
+            nbProcessus = 0
             processus1, processus2, processus3 = "None", "None", "None"
 
         html = f"""
