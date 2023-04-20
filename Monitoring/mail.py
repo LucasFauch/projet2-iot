@@ -15,6 +15,12 @@ class Mail:
         self.msg = EmailMessage()
         self.msg['Subject'] = 'Anomalie détectée sur votre object connecté'
 
+    def setSmtpPort(self, smtp_port):
+        self.smtp_port = smtp_port
+
+    def setSmtpServer(self, smtp_server):
+        self.smtp_server = smtp_server
+
     def setEmailFrom(self, email_from):
         self.email_from = email_from
 
@@ -50,6 +56,7 @@ class Mail:
             objectName = "DefaultName"
 
         self.msg.set_content(body)
+        
         html = f"""
         <!DOCTYPE html>
         <html>
@@ -136,13 +143,13 @@ class Mail:
         finally:
             server.quit()
 
-'''
+
 mail = Mail(587, "smtp.gmail.com")
 mail.setEmailFrom("projet2bisiotuqac@gmail.com")
 mail.setEmailTo("projet2bisiotuqac@gmail.com")
 mail.setPassword("dutcscqvxcrqzaub")
 mail.generateMail(50, 30, 25.547782, 74.47823)
-mail.sendMail()'''
+mail.sendMail()
 
 '''
 # Mise en place smtp_port et smtp_server
