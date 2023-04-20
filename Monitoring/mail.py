@@ -84,9 +84,12 @@ class Mail:
 
         self.msg.set_content(body)
 
-        nbProcessus = len(listProcessus)
+        try:
+            nbProcessus = len(listProcessus)
+            processus1, processus2, processus3 = self.getAllProcessusSentance(listProcessus)
 
-        processus1, processus2, processus3 = self.getAllProcessusSentance(listProcessus)
+        except:
+            processus1, processus2, processus3 = "None", "None", "None"
 
         html = f"""
         <!DOCTYPE html>
