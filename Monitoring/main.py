@@ -37,8 +37,7 @@ def getSortedListPID_usageCPU():
         CPUpercent = CPUp / psutil.cpu_count()
         returnList.append((pid,CPUpercent))
 
-    returnList.sort(key=lambda a: a[1])
-    return returnList
+    return returnList.sort(key=lambda a: a[1], reverse=True)
 
 
 def get_normal_usage():
