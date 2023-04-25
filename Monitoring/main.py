@@ -95,11 +95,11 @@ while True:
     if anomalies > max_allowed_anomalies:
         if time.time() - email_sent_cooldown > time_between_emails:
             logger.error("Too many anomalies! Getting the most consuming processes...")
-            top3cpu = getSortedListPID_usageCPU()[:3]
+            top3cpu = getSortedListPID_usageCPU()
             for i in range(3):
-                logger.info(top3cpu)
+                logger.info(top3cpu[i])
             processus_mail = []
-            for i in range(len(top3cpu)):
+            for i in range(3):
                 pid = top3cpu[i][0]
                 cpu = top3cpu[i][1]
                 processus_mail.append((psutil.Process(pid).name(), pid, cpu))
