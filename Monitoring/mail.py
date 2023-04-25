@@ -65,7 +65,7 @@ class Mail:
         self.msg['To'] = self.email_to
     
         body = "Alerte détection anormale de l'utilisation de votre CPU sur votre object connecté."
-        end_mail = f"Envoyé depuis {self.email_from}"
+        endMail = f"Envoyé depuis {self.email_from}"
 
         heureActuelle = datetime.datetime.now()
         heureActuelle = heureActuelle.strftime("%H:%M:%S")
@@ -154,7 +154,7 @@ class Mail:
                 <p><a href="http://fehmijaafar.net/wiki-iot/index.php?title=Main_Page" class="button">Contacter le service client</a></p>
                 <p>Merci,</p>
                 <p>L'équipe de support de l'objet connecté</p>
-                <p>{end_mail}</p>
+                <p>{endMail}</p>
             </div>
         </body>
         </html>

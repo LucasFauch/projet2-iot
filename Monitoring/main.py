@@ -64,9 +64,9 @@ def get_anomalies(cpu, ram):
 
 def send_email(logger, cpu, ram, listProcessus):
     mail = mailUtility.Mail(587, "smtp.gmail.com")
-    mail.setEmailFrom("projet2bisbis@gmail.com")
-    mail.setEmailTo("projet2bisbis@gmail.com")
-    mail.setPassword("wsnrbpxmzldzdhow")
+    mail.setEmailFrom("projet2bisbisiotuqac@gmail.com")
+    mail.setEmailTo("projet2bisbisiotuqac@gmail.com")
+    mail.setPassword("wajrvmghqqhtlqzn")
     mail.generateMail(cpu, ram, normal_cpu, normal_ram, listProcessus)
     mail.sendMail(logger)
     #logger.info("Sending email...")
