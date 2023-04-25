@@ -94,13 +94,16 @@ while True:
     # if anomalies > 5 and last email was sent more than 5 minutes ago, send email
     if anomalies > max_allowed_anomalies:
         if time.time() - email_sent_cooldown > time_between_emails:
-            logger.error("Too many anomalies! Sending email...")
+            logger.error("Too many anomalies! Getting the most consuming processes...")
             top3cpu = getSortedListPID_usageCPU()[:3]
+            for i in range(3):
+                logger.info(top3cpu)
             processus_mail = []
             for i in range(len(top3cpu)):
                 pid = top3cpu[i][0]
                 cpu = top3cpu[i][1]
                 processus_mail.append((psutil.Process(pid).name(), pid, cpu))
+            logger.info("Sending email...")
             send_email(logger, current_cpu, current_ram, processus_mail)
             logger.info("Email sent!")
             anomalies = 0
