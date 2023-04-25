@@ -144,7 +144,7 @@ class Mail:
                     <li>Date et heure de l'anomalie : {date} à {heureActuelle}</li>
                     <li>Description de l'anomalie : Utilisation du CPU à {cpu}% au lieu de {normalCpu}% en temps normal, et de la RAM à {ram}% au lieu de {normalRam}% en temps normal</li>
                 </ul>
-                <p> Liste des {nbProcessus} processus ayant une utilisation RAM de plus de 10% : </p>
+                <p> Liste des 3 {nbProcessus} processus ayant la plus forte consommation de CPU : </p>
                 <ul>
                     <li> {processus1} </li>
                     <li> {processus2} </li>
