@@ -21,6 +21,25 @@ def cpu_usage():
 def ram_usage():
     return psutil.virtual_memory()[2]
 
+def getSortedListPID_usageCPU():
+    returnList = []
+
+    for p in psutil.process_iter():
+        pid = p.pid
+        test_list = []
+        p.cpu_percent(interval=0.1)
+        for i in range(10):
+            p_cpu = p.cpu_percent(interval=None)
+            time.sleep(0.1)
+            test_list.append(p_cpu)
+        CPUp = float(sum(test_list))/len(test_list)
+                
+        CPUpercent = CPUp / psutil.cpu_count()
+        returnList.append((pid,CPUpercent))
+
+    returnList.sort(key=lambda a: a[1])
+    return returnList
+
 
 def get_normal_usage():
     cpu = 0
@@ -43,12 +62,12 @@ def get_anomalies(cpu, ram):
     return cpu > normal_cpu + max_allowed_overload, ram > normal_ram + max_allowed_overload
 
 
-def send_email(logger, cpu, ram):
+def send_email(logger, cpu, ram, listProcessus):
     mail = mailUtility.Mail(587, "smtp.gmail.com")
     mail.setEmailFrom("projet2bisiotuqac@gmail.com")
     mail.setEmailTo("projet2bisiotuqac@gmail.com")
     mail.setPassword("dutcscqvxcrqzaub")
-    mail.generateMail(cpu, ram, normal_cpu, normal_ram)
+    mail.generateMail(cpu, ram, normal_cpu, normal_ram, listProcessus)
     mail.sendMail(logger)
     #logger.info("Sending email...")
 
@@ -77,7 +96,13 @@ while True:
     if anomalies > max_allowed_anomalies:
         if time.time() - email_sent_cooldown > time_between_emails:
             logger.error("Too many anomalies! Sending email...")
-            send_email(logger, current_cpu, current_ram)
+            top3cpu = getSortedListPID_usageCPU()[:3]
+            processus_mail = []
+            for i in range(len(top3cpu)):
+                pid = top3cpu[i][0]
+                cpu = top3cpu[i][1]
+                processus_mail[i] = (psutil.Process(pid.name()), pid, cpu)
+            send_email(logger, current_cpu, current_ram, processus_mail)
             logger.info("Email sent!")
             anomalies = 0
             email_sent_cooldown = time.time()
