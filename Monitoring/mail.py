@@ -34,7 +34,7 @@ class Mail:
         self.msg['Subject'] = subject
 
     def getProcessusSentance(self, processus):
-        return f"{processus[0]} - PID : {processus[1]} avec une utilisation CPU de {processus[2]}% et RAM de {processus[3]}"
+        return f"{processus[0]} - PID : {processus[1]} avec une utilisation CPU de {processus[2]}%"
     
     def getAllProcessusSentance(self, listProcessus):
         try: 
