@@ -101,7 +101,7 @@ while True:
             for i in range(len(top3cpu)):
                 pid = top3cpu[i][0]
                 cpu = top3cpu[i][1]
-                processus_mail[i] = (psutil.Process(pid.name()), pid, cpu)
+                processus_mail[i] = (psutil.Process(pid).name(), pid, cpu)
             send_email(logger, current_cpu, current_ram, processus_mail)
             logger.info("Email sent!")
             anomalies = 0
